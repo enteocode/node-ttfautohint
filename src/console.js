@@ -9,14 +9,9 @@
 import { spawn } from 'child_process';
 import { join } from 'path';
 
-// Definitions
+// The executable must be on the same level
 
-const path = join(__dirname, 'bin');
-const file = 'ttfautohint'.concat(process.platform === 'win32' ? '.exe' : '');
-
-// Running the executable
-
-spawn(join(path, file), process.argv.slice(2), {
+spawn(join(__dirname, 'ttfautohint'.concat(process.platform === 'win32' ? '.exe' : '')), process.argv.slice(2), {
     stdio : [
         'inherit',
         'inherit',
