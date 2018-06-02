@@ -1,0 +1,11 @@
+# Text based files
+* text lf
+
+# Binaries
+
+ttfautohint binary
+
+*.exe binary
+*.dll binary
+*.so binary
+*.dylib binary
