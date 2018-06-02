@@ -123,13 +123,13 @@ $ ttfautohint [OPTION]... [IN-FILE [OUT-FILE]]
 Configuration can be easily changed from your project root, like this:
 
 ```bash
-npm config set ttfautohint:[option] [value]
+$ npm config set ttfautohint:[option] [value]
 ```
 
 #### `repository: string`
 
 The remote repository where precompiled binaries are come from. Every binary must 
-support both `i386` and `x64` architectures and follow this URL pattern:
+support both `x86` and `x64` architectures and follow this URL pattern:
 
 - `process.platform`
 - `npm-config: version`
