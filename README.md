@@ -1,16 +1,15 @@
 node-ttfautohint  [![Build Status][X]][Y]
 ================
 
-TTFAutohint wrapper for Node JS.
+> TTFAutohint wrapper for Node JS.
 
-## Key Features
+### Key Features
 
 - Standalone (no global dependency)
 - Stream API
 - Compilation process (if no precompiled online)
 
-
-## Highlights
+### Highlights
 
 - Type strict as possible (ESLint)
 - ES7
