@@ -4,6 +4,7 @@ import * as mkdirp from 'mkdirp';
 import * as env from './toolkit/env';
 import * as system from './toolkit/system';
 import * as cache from './toolkit/cache';
+
 import Compiler, { CFLAGS } from './lib/Compiler';
 
 // Definitions
@@ -22,17 +23,19 @@ const FLAG_LD = `${FLAG_CX} -L${cache.PATH_LIB}/lib -L${cache.PATH_LIB}/lib64`;
 const finalize = () => {
     system.log(`Version (${system.getVersion(cache.FILE)})`, true);
     mkdirp.sync(PATH);
-
     fs.copyFileSync(cache.FILE, FILE);
 };
 
 // IIFE for easy returns
 
 (async (): void => {
+    const isCompileForced = env.isCompileForced();
+
     if (! env.isNPM()) {
         system.error('This script cannot be processed outside of NPM');
     }
-    if (! env.isCompileForced()) {
+
+    if (! isCompileForced) {
         if (system.hasLocalBinary()) {
             return void system.log(`Local binary found (${system.getVersion(FILE)})`, true);
         }
@@ -43,16 +46,17 @@ const finalize = () => {
             return;
         }
     }
+
     await cache.reset();
 
-    if (env.isSupported()) {
+    if (! isCompileForced && env.isSupported()) {
         system.log(`Getting precompiled binary for ${system.getPlatformString()}`);
 
         try {
             const host = system.getBinaryUrl();
             const file = await system.getRemoteContent(host, 3);
 
-            await system.putFile(cache.FILE, file);
+            system.putFile(cache.FILE, file);
             finalize();
 
             return;
@@ -61,7 +65,6 @@ const finalize = () => {
             system.log(e);
         }
     }
-    // Compiling from source (from remote TAR archives)
 
     system.log('Getting source packages');
 

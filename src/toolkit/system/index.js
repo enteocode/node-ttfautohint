@@ -141,13 +141,9 @@ export const getRemoteContent = (url: string, maxRedirects: number = 0): Promise
  * @param {number} mode
  * @return {string}
  */
-export const putFile = async (path: string, buffer: Buffer, mode: number = MODE): string => {
+export const putFile = (path: string, buffer: Buffer, mode: number = MODE): string => {
     mkdirp.sync(dirname(path), mode);
-
-    const stream = fs.createWriteStream(path, { mode });
-
-    stream.write(buffer);
-    stream.end();
+    fs.writeFileSync(path, buffer, { mode });
 };
 
 /**

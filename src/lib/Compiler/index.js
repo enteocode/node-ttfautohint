@@ -70,8 +70,7 @@ class Compiler {
             const path = join(targetDir, name);
 
             if (! fs.existsSync(path)) {
-                const file = await system.getRemoteContent(this.url, 3);
-                await system.putFile(path, file);
+                system.putFile(path, await system.getRemoteContent(this.url, 3));
             }
             this.tar = path;
         }
