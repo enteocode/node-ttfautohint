@@ -19,7 +19,7 @@ install:
   - npm i
 
 script:
-  - test -e ./bin/ttfautohint || echo Binary is missing
+  - test -e ./bin/ttfautohint || exit 1
 
 cache:
   directories:
