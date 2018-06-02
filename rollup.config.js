@@ -4,9 +4,9 @@ import babel from 'rollup-plugin-babel';
 import json from 'rollup-plugin-json';
 import resolve from 'rollup-plugin-node-resolve';
 
-/**
- * @typedef {{name: string, transformBundle(string): string}} RollupPlugin
- */
+// Definitions
+
+const ENV_PREFIX = '#!/usr/bin/env node';
 
 /**
  * @type {Object} Internal cache
@@ -29,9 +29,13 @@ const uglifyOptions = {
 };
 
 /**
- * @type {RollupPlugin} Bundle transformer for Rollup (minify as small as possible)
+ * Custom plugin for Rollup to apply logic on bundle-scope
+ *
+ * @private
+ * @param {boolean} isStandalone
+ * @return {Object}
  */
-const transform = {
+const transform = (isStandalone) => ({
     name : 'rollup-custom-minify',
 
     transformBundle(source) {
@@ -39,11 +43,11 @@ const transform = {
         const code = `((${vars}) => {${source}})(${vars});`;
 
         return minify(
-            code,
+            isStandalone ? [ENV_PREFIX, code].join(`\n`) : code,
             uglifyOptions
         );
     }
-};
+});
 
 /**
  * Rollup configuration
@@ -52,11 +56,12 @@ const transform = {
  * compiler for plugins and loaders
  *
  * @public
- * @param {string} input
- * @param {string} file
+ * @param {string}  input
+ * @param {string}  file
+ * @param {boolean} isStandalone
  * @return {Object}
  */
-const getConfig = (input, file = basename(input)) => ({
+const getConfig = (input, file = basename(input), isStandalone = false) => ({
     input,
     cache,
     output : {
@@ -80,12 +85,12 @@ const getConfig = (input, file = basename(input)) => ({
         json(),
         babel({ exclude : 'node_modules/**' }),
 
-        transform
+        transform(isStandalone)
     ]
 });
 
 export default [
     getConfig('src/index.js'),
     getConfig('src/install.js'),
-    getConfig('src/console.js', 'bin/ttfautohint.js')
+    getConfig('src/console.js', 'bin/ttfautohint.js', true)
 ];
