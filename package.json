@@ -1,0 +1,67 @@
+{
+    "name": "ttfautohint",
+    "version": "1.0.0",
+    "description": "TTFAutohint wrapper for Node JS",
+    "main": "index.js",
+    "license": "MIT",
+    "bin": {
+        "ttfautohint": "bin/ttfautohint"
+    },
+    "scripts": {
+        "start": "rollup -c -w",
+        "build": "rollup -c",
+        "install": "node install"
+    },
+    "config": {
+        "repository": "https://raw.githubusercontent.com/enteocode/node-ttfautohint",
+        "version": "1.8",
+        "force-compile": false
+    },
+    "engines": {
+        "node": ">=8"
+    },
+    "author": {
+        "name": "Székely Ádám",
+        "email": "stereotribe@hotmail.com"
+    },
+    "keywords": [
+        "ttfautohint",
+        "stream",
+        "font",
+        "hint",
+        "compiler"
+    ],
+    "devDependencies": {
+        "babel-core": "^6.26.3",
+        "babel-eslint": "^8.2.3",
+        "babel-loader": "^7.1.4",
+        "babel-plugin-transform-class-properties": "^6.24.1",
+        "babel-plugin-transform-object-rest-spread": "^6.26.0",
+        "babel-preset-env": "^1.7.0",
+        "babel-preset-flow": "^6.23.0",
+        "eslint": "^4.19.1",
+        "eslint-plugin-flowtype": "^2.49.3",
+        "eslint-plugin-react": "^7.8.2",
+        "rollup": "^0.59.4",
+        "rollup-plugin-babel": "^3.0.4",
+        "rollup-plugin-json": "^3.0.0",
+        "rollup-plugin-node-resolve": "^3.3.0",
+        "uglify-es": "^3.3.9"
+    },
+    "dependencies": {
+        "decompress": "^4.2.0",
+        "mkdirp": "^0.5.1",
+        "rimraf": "^2.6.2"
+    },
+    "files": [
+        "index.js",
+        "install.js"
+    ],
+    "bugs": {
+        "url": "https://github.com/enteocode/node-ttfautohint/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/enteocode/node-ttfautohint.git"
+    }
+}

@@ -1,0 +1,12 @@
+# Source related folders
+
+/node_modules/
+/bin/
+/docs/
+
+/index.js
+/install.js
+
+# Rollup configuration isn't make any sense on code-quality
+
+/rollup.config.js

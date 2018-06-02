@@ -1,0 +1,28 @@
+language: node_js
+
+sudo: true
+
+env:
+  global:
+    - NODE_ENV="production"
+    - TEMP="/tmp"
+
+node_js:
+  - "8"
+
+before_script:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y build-essential
+
+install:
+  - npm config set ttfautohint:force-compile true
+  - npm i
+
+script:
+  - test -e ./bin/ttfautohint || echo Binary is missing
+
+cache:
+  directories:
+    - $HOME/.node-gyp
+    - $HOME/.npm
+    - $TEMP/enteocode/ttfautohint/tar

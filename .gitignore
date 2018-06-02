@@ -2,4 +2,7 @@
 .idea
 .vscode
 
+/node_modules/
+/bin/
+
 *.log
