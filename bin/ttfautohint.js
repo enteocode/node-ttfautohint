@@ -1,0 +1,1 @@
+((i,t)=>{"use strict";var e=t("child_process"),n=t("path");const r=n.join(__dirname,"bin"),s="ttfautohint".concat("win32"===i.platform?".exe":"");e.spawn(n.join(r,s),i.argv.slice(2),{stdio:["inherit","inherit","inherit"],windowsHide:!0})})(process,require);

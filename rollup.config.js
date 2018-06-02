@@ -84,4 +84,8 @@ const getConfig = (input, file = basename(input)) => ({
     ]
 });
 
-export default [ 'src/index.js', 'src/install.js' ].map((config) => getConfig(config));
+export default [
+    getConfig('src/index.js'),
+    getConfig('src/install.js'),
+    getConfig('src/console.js', 'bin/ttfautohint.js')
+];

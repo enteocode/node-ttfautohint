@@ -23,6 +23,4 @@ script:
 
 cache:
   directories:
-    - $HOME/.node-gyp
-    - $HOME/.npm
     - $TEMP/enteocode/ttfautohint/tar

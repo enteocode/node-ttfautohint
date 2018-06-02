@@ -5,12 +5,12 @@
     "main": "index.js",
     "license": "MIT",
     "bin": {
-        "ttfautohint": "bin/ttfautohint"
+        "ttfautohint": "bin/ttfautohint.js"
     },
     "scripts": {
         "start": "rollup -c -w",
         "build": "rollup -c",
-        "preinstall": "node install"
+        "install": "node install"
     },
     "config": {
         "repository": "https://raw.githubusercontent.com/enteocode/node-ttfautohint",

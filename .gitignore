@@ -3,6 +3,5 @@
 .vscode
 
 /node_modules/
-/bin/
-
-*.log
+/bin/*
+!/bin/ttfautohint.js
