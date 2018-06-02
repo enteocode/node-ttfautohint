@@ -10,7 +10,7 @@
     "scripts": {
         "start": "rollup -c -w",
         "build": "rollup -c",
-        "install": "node install"
+        "preinstall": "node install"
     },
     "config": {
         "repository": "https://raw.githubusercontent.com/enteocode/node-ttfautohint",
