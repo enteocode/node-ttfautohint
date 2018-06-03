@@ -1,6 +1,5 @@
 import { join } from 'path';
 import * as rimraf from 'rimraf';
-import * as os from 'os';
 import * as fs from 'fs';
 import * as env from '../env';
 import * as system from '../system';
@@ -14,7 +13,7 @@ const TAR = 'tar';
 /**
  * @type {string} System dependant temporary directory space
  */
-export const PATH = join(os.tmpdir(), 'enteocode', env.getPackageName());
+export const PATH = join(env.getTempDir(), 'enteocode', env.getPackageName());
 
 // Subdirectories path
 

@@ -1,3 +1,6 @@
+import * as os from 'os';
+import * as fs from 'fs';
+
 /**
  * Checks NPM by the Environmental Variables
  *
@@ -43,12 +46,26 @@ export const isCompileForced = (env: Object = process.env): boolean => {
  * @return {string}
  */
 export const getPackageName = (env: Object = process.env): string => {
-    const name = String(env.npm_package_name);
+    return String(env.npm_package_name).split('/').pop();
+};
 
-    if (name) {
-        return name.split('/').pop();
+/**
+ * Returns the resolved cache directory path
+ *
+ * At first we try to use the NPM cache folder as it persists until clear,
+ * while /tmp resets on each reboot in UNIX
+ *
+ * @public
+ * @param {Object} env
+ * @return {string}
+ */
+export const getTempDir = (env: Object = process.env): string => {
+    const cache = String(env.npm_config_cache);
+
+    if (cache && fs.existsSync(cache)) {
+        return cache;
     }
-    return '';
+    return os.tmpdir();
 };
 
 /**
