@@ -94,7 +94,7 @@ The minimum font-size to optimize for.
 
 #### `max: number = 48`
 
-The minimum font-size to optimize for.
+The maximum font-size to optimize for.
 
 #### `reference: string`
 
