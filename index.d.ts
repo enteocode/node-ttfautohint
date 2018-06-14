@@ -1,6 +1,6 @@
 declare module "ttfautohint"
 {
-    import { Transform } from "stream";
+    import { Transform, TransformOptions } from "stream";
 
     export = TTFAutohint;
 
@@ -22,6 +22,6 @@ declare module "ttfautohint"
 
         static compile(sourceFile: string, targetFile: string, options?: TTFAutohintOptions): TTFAutohint;
 
-        constructor(options?: TTFAutohintOptions);
+        constructor(options?: TTFAutohintOptions, transformOptions?: TransformOptions);
     }
 }

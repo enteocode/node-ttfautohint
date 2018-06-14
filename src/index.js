@@ -3,6 +3,8 @@ import * as fs from 'fs';
 import { spawnSync } from 'child_process';
 import { Transform } from 'stream';
 
+import type { TransformOptions } from 'stream';
+
 // Definitions
 
 export type TTFAutohintOptions = {
@@ -113,8 +115,8 @@ class TTFAutohint extends Transform {
         i.pipe(x).pipe(o).close();
     }
 
-    constructor(options: TTFAutohintOptions = {}) {
-        super({ allowHalfOpen : false });
+    constructor(options: TTFAutohintOptions = {}, transformOptions: TransformOptions = undefined) {
+        super(transformOptions);
 
         this.options = {
             ... defaultOptions,
