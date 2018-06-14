@@ -15,7 +15,7 @@ node-ttfautohint  [![Build Status][X]][Y]
 - ES7
 - Functional
 
-## Stream API
+## Module Interface
 
 The class implements the `stream.Transformer` interface.
 
@@ -27,10 +27,10 @@ $ npm i ttfautohint
 
 ### Usage
 
+#### Stream API
+
 ```javascript
 import TTFAutohint from 'ttfautohint';
- 
-// Stream API
  
 const i = fs.createReadStream('/source/font.ttf');
 const o = fs.createWriteStream('/target/font-compiled.ttf');
@@ -42,10 +42,10 @@ const t = new TTFAutohint();
 i.pipe(t).pipe(o);
 ```
 
+#### Buffer API
+
 ```javascript
 import TTFAutohint from 'ttfautohint';
- 
-// Static (Buffer) API
  
 const i = fs.readFileSync('/source/font.ttf');
  
@@ -54,11 +54,11 @@ const i = fs.readFileSync('/source/font.ttf');
 const o = TTFAutohint.transform(i);
 ```
 
+#### File API
+
 ```javascript
 import TTFAutohint from 'ttfautohint';
- 
-// File API
- 
+  
 const i = '/source/font.ttf';
 const o = '/target/font-compiled.ttf';
  
