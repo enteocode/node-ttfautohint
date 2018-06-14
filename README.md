@@ -17,7 +17,7 @@ node-ttfautohint  [![Build Status][X]][Y]
 
 ## Stream API
 
-The class implements `stream.Transformer`.
+The class implements the `stream.Transformer` interface.
 
 ### Install
 
@@ -39,16 +39,25 @@ const o = fs.createWriteStream('/target/font-compiled.ttf');
  
 const t = new TTFAutohint();
  
-i.pipe(t);
-t.pipe(o);
- 
-o.close();
+i.pipe(t).pipe(o);
 ```
 
 ```javascript
 import TTFAutohint from 'ttfautohint';
  
-// Static
+// Static (Buffer) API
+ 
+const i = fs.readFileSync('/source/font.ttf');
+ 
+// TTFAutohintOptions can be passed as the second argument
+ 
+const o = TTFAutohint.transform(i);
+```
+
+```javascript
+import TTFAutohint from 'ttfautohint';
+ 
+// File API
  
 const i = '/source/font.ttf';
 const o = '/target/font-compiled.ttf';
@@ -139,7 +148,7 @@ Windows binaries must be suffixed by `.exe`.
 
 #### `version: string`
 
-Version of the TTFAutohint needed, which should follow Semantic Versioning.
+Version of the precompiled TTFAutohint.
 
 #### `force-compile: boolean`
 

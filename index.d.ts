@@ -22,7 +22,7 @@ declare module "ttfautohint"
 
         static compile(sourcePath: string, targetPath: string, options?: TTFAutohintOptions);
 
-        static convert(buffer: Buffer, options?: TTFAutohintOptions): Buffer;
+        static transform(buffer: Buffer, options?: TTFAutohintOptions): Buffer;
 
         constructor(options?: TTFAutohintOptions, transformOptions?: TransformOptions);
     }

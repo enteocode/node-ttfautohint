@@ -36,6 +36,8 @@ export type TTFAutohintOptions = {
 const FILE_NAME = 'ttfautohint'.concat(process.platform === 'win32' ? '.exe' : '');
 const FILE_PATH = path.resolve(__dirname, 'bin', FILE_NAME);
 
+// Symbols
+
 const buffer = Symbol('ttfautohint/buffer');
 
 /**
@@ -110,10 +112,10 @@ class TTFAutohint extends Transform {
         const i = fs.createReadStream(sourcePath);
         const o = fs.createWriteStream(targetPath);
 
-        i.pipe(x).pipe(o).close();
+        i.pipe(x).pipe(o);
     }
 
-    static convert(buffer: Buffer, options: TTFAutohintOptions = {}): Buffer {
+    static transform(buffer: Buffer, options: TTFAutohintOptions = {}): Buffer {
         const config = getPreparedArguments({
             ... defaultOptions,
             ... options
@@ -121,7 +123,7 @@ class TTFAutohint extends Transform {
         const { stderr, stdout } = spawnSync(FILE_PATH, config, { input : buffer, windowsHide : true });
 
         if (stderr.length) {
-            throw String(stderr);
+            throw new Error(stderr);
         }
         return Buffer.from(stdout);
     }
@@ -139,10 +141,10 @@ class TTFAutohint extends Transform {
 
     _flush(callback: Function) {
         try {
-            const buffer = Buffer.concat(this[ buffer ]);
-            const hinted = TTFAutohint.convert(buffer, this.options);
+            const base = Buffer.concat(this[ buffer ]);
+            const font = TTFAutohint.transform(base, this.options);
 
-            callback(null, hinted);
+            callback(null, font);
         }
         catch (e) {
             callback(e.message);
