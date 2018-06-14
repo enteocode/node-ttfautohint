@@ -12,10 +12,6 @@ import { join } from 'path';
 // The executable must be on the same level
 
 spawn(join(__dirname, 'ttfautohint'.concat(process.platform === 'win32' ? '.exe' : '')), process.argv.slice(2), {
-    stdio : [
-        'inherit',
-        'inherit',
-        'inherit'
-    ],
-    windowsHide: true
+    stdio : 'inherit',
+    windowsHide : true
 });
