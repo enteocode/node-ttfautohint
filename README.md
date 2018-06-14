@@ -17,7 +17,7 @@ node-ttfautohint  [![Build Status][X]][Y]
 
 ## Module Interface
 
-The class implements the `stream.Transformer` interface.
+The class implements `stream.Transformer`.
 
 ### Install
 
