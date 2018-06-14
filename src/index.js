@@ -60,17 +60,15 @@ const defaultOptions: TTFAutohintOptions = {
  * @return {string[]}
  */
 const getPreparedArguments = (options: TTFAutohintOptions): string[] => {
-    const info = options.info;
     const args = [
         '-W', // Windows fix
         '-i', // Remove license restrictions
-
         `-G ${options.hintingLimit}`
     ];
 
     // Version info to the font's description
 
-    if (! info) {
+    if (! options.info) {
         args.push('-n');
     }
 
@@ -107,42 +105,51 @@ class TTFAutohint extends Transform {
 
     options: TTFAutohintOptions;
 
-    static compile(sourceFile: string, targetFile: string, options: TTFAutohintOptions = {}): TTFAutohint {
+    static compile(sourcePath: string, targetPath: string, options: TTFAutohintOptions = {}) {
         const x = new TTFAutohint(options);
-        const i = fs.createReadStream(sourceFile);
-        const o = fs.createWriteStream(targetFile);
+        const i = fs.createReadStream(sourcePath);
+        const o = fs.createWriteStream(targetPath);
 
         i.pipe(x).pipe(o).close();
     }
 
-    constructor(options: TTFAutohintOptions = {}, transformOptions: TransformOptions = undefined) {
-        super(transformOptions);
-
-        this.options = {
+    static convert(buffer: Buffer, options: TTFAutohintOptions = {}): Buffer {
+        const config = getPreparedArguments({
             ... defaultOptions,
             ... options
-        };
+        });
+        const { stderr, stdout } = spawnSync(FILE_PATH, config, { input : buffer, windowsHide : true });
+
+        if (stderr.length) {
+            throw String(stderr);
+        }
+        return Buffer.from(stdout);
+    }
+
+    constructor(options: TTFAutohintOptions = {}, transformOptions: TransformOptions) {
+        super(transformOptions);
+
+        this.options = options;
     }
 
     _transform(chunk: Buffer, encoding: string, callback: Function) {
-        this[ buffer ].push(chunk);
+        this[ buffer ].push(Buffer.from(chunk));
         callback();
     }
 
     _flush(callback: Function) {
-        const { stdout, stderr } = spawnSync(FILE_PATH, getPreparedArguments(this.options), {
-            input : Buffer.concat(this[ buffer ])
-        });
+        try {
+            const buffer = Buffer.concat(this[ buffer ]);
+            const hinted = TTFAutohint.convert(buffer, this.options);
 
-        if (stderr.length) {
-            callback(String(stderr));
+            callback(null, hinted);
         }
-        else {
-            callback(null, stdout);
+        catch (e) {
+            callback(e.message);
         }
     }
 }
 
-Object.defineProperty(TTFAutohint, 'name', { value : 'TTFAutohintTransformer' });
+Object.defineProperty(TTFAutohint, 'name', { value : 'TTFAutohint' });
 
 export default TTFAutohint;
