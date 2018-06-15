@@ -4,34 +4,9 @@ import { spawnSync } from 'child_process';
 import { Transform } from 'stream';
 
 import type { TransformOptions } from 'stream';
+import type { TTFAutohintOptions } from 'ttfautohint';
 
 // Definitions
-
-export type TTFAutohintOptions = {
-    // Add subglyph adjustment for exotic fonts
-    extended: boolean;
-
-    // Input font is symbolic
-    icon: boolean;
-
-    // Add TTFAutohint version string to the name table of the font
-    info: boolean;
-
-    // Maximum PPEM value
-    hintingLimit: number;
-
-    // The minimum PPEM value for hint sets
-    min: number;
-
-    // The maximum PPEM value for hint sets
-    max: number;
-
-    // Reference font file for deriving blue-zones
-    reference: string;
-
-    // X-Height
-    size: number
-};
 
 const FILE_NAME = 'ttfautohint'.concat(process.platform === 'win32' ? '.exe' : '');
 const FILE_PATH = path.resolve(__dirname, 'bin', FILE_NAME);
