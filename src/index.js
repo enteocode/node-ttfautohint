@@ -1,5 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs';
+import * as mkdirp from 'mkdirp';
 import { spawnSync } from 'child_process';
 import { Transform } from 'stream';
 
@@ -77,15 +78,40 @@ const getPreparedArguments = (options: TTFAutohintOptions): string[] => {
     ]);
 };
 
+/**
+ * Returns the resolved target path and creates subdirectories if not exists
+ *
+ * @private
+ * @param {string} sourceFile
+ * @param {string} targetFile
+ * @return {string}
+ */
+const getTargetPath = (sourceFile: string, targetFile: string = ''): string => {
+    if (targetFile && typeof targetFile === 'string') {
+        const output = path.dirname(targetFile);
+
+        if (! fs.existsSync(output)) {
+            mkdirp.sync(output);
+        }
+        return targetFile;
+    }
+    return sourceFile.replace(/\.ttf/i, '.compiled.ttf');
+};
+
+/**
+ * TTFAutohint
+ */
 class TTFAutohint extends Transform {
     [ buffer ]: Buffer[] = [];
 
     options: TTFAutohintOptions;
 
-    static compile(sourcePath: string, targetPath: string, options: TTFAutohintOptions = {}) {
+    static compile(sourceFile: string, targetFile: string, options: TTFAutohintOptions = {}) {
+        const file = getTargetPath(sourceFile, targetFile);
+
         const x = new TTFAutohint(options);
-        const i = fs.createReadStream(sourcePath);
-        const o = fs.createWriteStream(targetPath);
+        const i = fs.createReadStream(sourceFile);
+        const o = fs.createWriteStream(file);
 
         i.pipe(x).pipe(o);
     }

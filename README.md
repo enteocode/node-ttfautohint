@@ -60,9 +60,14 @@ const o = TTFAutohint.transform(i);
 import TTFAutohint from 'ttfautohint';
   
 const i = '/source/font.ttf';
-const o = '/target/font-compiled.ttf';
+const o = '/target/font.compiled.ttf';
  
 // TTFAutohintOptions can be passed as the third argument
+ 
+// If there is no output path provided, then compiles to the source folder 
+// with suffix
+ 
+// Creates non-existing target directories
  
 TTFAutohint.compile(i, o);
 ```
@@ -110,7 +115,7 @@ The maximum font-size to optimize for.
 Absolute path to an optional reference TTF/TTC font where missing blue-zones 
 can be derived from.
 
-## Console API
+## Console Interface
 
 ### Install
 

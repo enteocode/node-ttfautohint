@@ -35,7 +35,7 @@ declare module "ttfautohint"
     {
         options: TTFAutohintOptions;
 
-        static compile(sourcePath: string, targetPath: string, options?: TTFAutohintOptions);
+        static compile(sourceFile: string, targetFile?: string, options?: TTFAutohintOptions);
 
         static transform(buffer: Buffer, options?: TTFAutohintOptions): Buffer;
 
